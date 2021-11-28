@@ -1,0 +1,7 @@
+venv
+.ipynb_checkpoints
+*.egg-info
+.idea
+VERSION.txt
+dist
+__pycache__
