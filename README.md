@@ -15,9 +15,9 @@ See the [Jupyter notebooks](notebooks) for examples.
 
 ### Using the interactive Jupyter notebooks
 
-For a very quickstart without any installation, use [our Jupyter notebooks online](https://mybinder.org/v2/gh/hasadna/open-bus-stride-client/HEAD?labpath=notebooks)
+For a very quickstart without any installation, you can open the notebooks online:
 
-Browse the available notebooks in the file browser on the left sidebar.
+* [Load route rides to dataframe](https://mybinder.org/v2/gh/hasadna/open-bus-stride-client/HEAD?labpath=notebooks%2FLoad%20route%20rides%20to%20dataframe.ipynb)
 
 ### Using locally
 
