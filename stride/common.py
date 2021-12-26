@@ -1,5 +1,6 @@
 import json
 import datetime
+import urllib.parse
 
 import requests
 
@@ -48,8 +49,22 @@ def parse_error_res(res: dict):
         return res
 
 
-def get(path, params=None):
-    res = requests.get(config.STRIDE_API_BASE_URL + path, params=parse_params(params))
+def pre_requests_callback_print(url, params):
+    if len(params) > 0:
+        print('{}?{}'.format(url, urllib.parse.urlencode(params)))
+    else:
+        print(url)
+
+
+def get(path, params=None, pre_requests_callback=None):
+    url = config.STRIDE_API_BASE_URL + path
+    params = parse_params(params)
+    if pre_requests_callback:
+        if pre_requests_callback == 'print':
+            pre_requests_callback_print(url, params)
+        else:
+            pre_requests_callback(url, params)
+    res = requests.get(url, params=params)
     res_status_code = res.status_code
     res_text = res.text
     if res_status_code == 200:
