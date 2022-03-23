@@ -10,5 +10,7 @@ def iterate(path, params=None, limit=10000, pre_requests_callback=None):
         for obj in common.get(path, params=params, pre_requests_callback=pre_requests_callback):
             yield obj
             params['offset'] += 1
+            if params['offset'] >= limit:
+                break
         if params['offset'] == last_offset or params['offset'] >= limit:
             break
