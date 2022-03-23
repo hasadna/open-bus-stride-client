@@ -2,6 +2,9 @@
 
 Python client library to interact with the [Stride REST API](https://open-bus-stride-api.hasadna.org.il/docs)
 
+* Please report issues and feature requests [here](https://github.com/hasadna/open-bus/issues/new)
+* To get updates about the system status and for general help join Hasadna's Slack #open-bus channel ([Hasadna Slack signup link](https://join.slack.com/t/hasadna/shared_invite/zt-167h764cg-J18ZcY1odoitq978IyMMig))
+
 ## Usage
 
 Refer to the [API Docs](https://open-bus-stride-api.hasadna.org.il/docs) for the available paths, parameter types and general usage.
