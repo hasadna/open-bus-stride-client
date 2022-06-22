@@ -11,7 +11,7 @@ jobs:
         TWINE_PASSWORD: ${{ secrets.TWINE_PASSWORD }}
       run: |
         curl -s https://raw.githubusercontent.com/OriHoch/uumpa-ci-toolbox/65a0704332e63d51f63981dbb25cd83682dc4078/bin/github_actions_install.sh \
-          | bash -s 65a0704332e63d51f63981dbb25cd83682dc4078 OriHoch/uumpa-ci-toolbox &&\
+          | bash -s e5943edc44ddbdd448af905b16f9fd9f329eb08b OriHoch/uumpa-ci-toolbox &&\
         uci github actions self-checkout --config-user-name "open-bus-stride-client-ci" &&\
         pip install -e .[all] &&\
         pip install -r tests/requirements.txt &&\
