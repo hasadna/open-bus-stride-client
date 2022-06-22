@@ -31,7 +31,7 @@ def iterate(path, params=None, limit=10000, pre_requests_callback=None):
                 elif isinstance(item, json_stream.base.TransientStreamingJSONList):
                     item = [v for v in item]
                 yield common.parse_res(item)
-                if i+1 >= limit:
+                if limit and i+1 >= limit:
                     break
         else:
             res_text = res.text
