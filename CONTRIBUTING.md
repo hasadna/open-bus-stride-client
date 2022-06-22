@@ -1,3 +1,11 @@
+## Local Development
+
+```
+python3 -m venv venv
+. venv/bin/activate
+pip install -e '.[all]'
+```
+
 ## Publishing the PyPi package
 
 Install dependencies
