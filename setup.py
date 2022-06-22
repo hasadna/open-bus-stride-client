@@ -18,6 +18,8 @@ setup(
     version=version,
     packages=find_packages(exclude=['contrib', 'docs', 'tests*']),
     install_requires=['requests', 'pytz', 'json-stream==1.3.0'],
+    extras_require={
+        'cli': extras_cli,
         'all': [
             *extras_cli,
         ]
