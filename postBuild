@@ -4,4 +4,4 @@
 
 set -ex
 
-pip install open-bus-stride-client[all]==$(cat VERSION.txt)
+pip install -e .[all]
