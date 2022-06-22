@@ -9,9 +9,23 @@ if path.exists("VERSION.txt"):
 else:
     version = str(time.time())
 
+
+extras_cli = ['click==8.1.3']
+
+
 setup(
     name='open-bus-stride-client',
     version=version,
     packages=find_packages(exclude=['contrib', 'docs', 'tests*']),
-    install_requires=['requests', 'pytz']
+    install_requires=['requests', 'pytz', 'json-stream==1.3.0'],
+        'urbanaccess': extras_urbanaccess,
+        'all': [
+            *extras_cli,
+        ]
+    },
+    entry_points={
+        'console_scripts': [
+            'stride = stride.cli:main',
+        ]
+    },
 )
