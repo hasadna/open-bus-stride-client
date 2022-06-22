@@ -11,6 +11,7 @@ else:
 
 
 extras_cli = ['click==8.1.3']
+extras_urbanaccess = ['urbanaccess==0.2.2', 'geopandas==0.10.2']
 
 
 setup(
@@ -22,6 +23,7 @@ setup(
         'cli': extras_cli,
         'all': [
             *extras_cli,
+            *extras_urbanaccess,
         ]
     },
     entry_points={
