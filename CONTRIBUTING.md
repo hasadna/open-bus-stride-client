@@ -6,24 +6,16 @@ python3 -m venv venv
 pip install -e '.[all]'
 ```
 
-## Publishing the PyPi package
+## Running Tests
 
-Install dependencies
-
-```
-python3 -m pip install --upgrade build pip twine
-```
-
-Set the version in `VERSION.txt` (without preceding v)
-
-Build
+Install test requirements
 
 ```
-python3 -m build
+pip install -r tests/requirements.txt
 ```
 
-Publish
+Run tests
 
 ```
-python3 -m twine upload dist/open-bus-stride-client-$(cat VERSION.txt).tar.gz
+pytest
 ```
