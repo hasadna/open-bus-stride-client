@@ -11,6 +11,8 @@ else:
 
 
 extras_cli = ['click==8.1.3']
+extras_jupyter = ['jupyterlab', 'ipywidgets']
+extras_notebooks = ['pandas>=1.3<1.4']
 
 
 setup(
@@ -20,8 +22,11 @@ setup(
     install_requires=['requests', 'pytz', 'json-stream==1.3.0'],
     extras_require={
         'cli': extras_cli,
+        'notebooks': extras_notebooks,
         'all': [
             *extras_cli,
+            *extras_jupyter,
+            *extras_notebooks,
         ]
     },
     entry_points={
