@@ -10,8 +10,11 @@ from . import config, exceptions
 
 def parse_value(v):
     if isinstance(v, str):
-        if len(v) == 32 and '-' in v and 'T' in v and ':' in v and '+' in v:
-            v = datetime.datetime.strptime(v, '%Y-%m-%dT%H:%M:%S.%f%z')
+        if '-' in v and 'T' in v and ':' in v and '+' in v:
+            if len(v) == 32:
+                v = datetime.datetime.strptime(v, '%Y-%m-%dT%H:%M:%S.%f%z')
+            elif len(v) == 25:
+                v = datetime.datetime.strptime(v, '%Y-%m-%dT%H:%M:%S%z')
     return v
 
 

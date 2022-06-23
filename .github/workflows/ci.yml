@@ -1,0 +1,25 @@
+name: CI
+on:
+  push:
+jobs:
+  ci:
+    runs-on: ubuntu-20.04
+    steps:
+    - env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        TWINE_USERNAME: ${{ secrets.TWINE_USERNAME }}
+        TWINE_PASSWORD: ${{ secrets.TWINE_PASSWORD }}
+      run: |
+        curl -s https://raw.githubusercontent.com/OriHoch/uumpa-ci-toolbox/65a0704332e63d51f63981dbb25cd83682dc4078/bin/github_actions_install.sh \
+          | bash -s 4d163c416a5c7192e4f4dba883bb4c0480eaee8c OriHoch/uumpa-ci-toolbox &&\
+        uci github actions self-checkout --config-user-name "open-bus-stride-client-ci" &&\
+        pip install -e .[all] &&\
+        pip install -r tests/requirements.txt &&\
+        pytest &&\
+        TAG_NAME="$(uci github actions get-tag-name)" &&\
+        if [ "${TAG_NAME}" != "" ]; then
+          echo "${TAG_NAME}" > VERSION.txt &&\
+          pip install --upgrade build pip twine &&\
+          python3 -m build &&\
+          python3 -m twine upload "dist/open-bus-stride-client-${TAG_NAME}.tar.gz"
+        fi
