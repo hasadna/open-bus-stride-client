@@ -34,6 +34,14 @@ def create_fake_gtfs(**kwargs):
                              'For example: "34.8, 31.96, 34.81, 31.97". '
                              'Can get it from https://boundingbox.klokantech.com/ - csv export')
 def create_network(**kwargs):
-    """Create UrbanAccess accessibility network from the fake gtfs data"""
+    """Create UrbanAccess accessibility network from the fake gtfs data
+
+    The resulting network can then be loaded from Python code:
+
+    import stride.urbanaccess.helpers;
+    urbanaccess_net = stride.urbanaccess.helpers.load_network(network_path)
+
+    See https://github.com/UDST/urbanaccess documentation for details on how to do analysis on this network.
+    """
     from .create_network import main
     main(**kwargs)
