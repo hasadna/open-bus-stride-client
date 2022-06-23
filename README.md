@@ -15,6 +15,7 @@ For a very quickstart without any installation, you can open the notebooks onlin
 * [getting all arrivals to all stops of a given line on a given day](https://mybinder.org/v2/gh/hasadna/open-bus-stride-client/HEAD?labpath=notebooks%2Fgetting%20all%20arrivals%20to%20all%20stops%20of%20a%20given%20line%20in%20a%20given%20day.ipynb)
 * [load siri vehicle locations to pandas dataframe](https://mybinder.org/v2/gh/hasadna/open-bus-stride-client/main?labpath=notebooks%2Fload%20siri%20vehicle%20locations%20to%20pandas%20dataframe.ipynb)
 * [load gtfs timetable to pandas dataframe](https://mybinder.org/v2/gh/hasadna/open-bus-stride-client/HEAD?labpath=notebooks%2Fload%20gtfs%20timetable%20to%20pandas%20dataframe.ipynb)
+* [siri accessibility analysis using UrbanAccess](https://mybinder.org/v2/gh/hasadna/open-bus-stride-client/HEAD?labpath=notebooks%2Fsiri%20accessibility%20analysis%20using%20UrbanAccess.ipynb)
 
 ## Local Usage
 
@@ -58,7 +59,9 @@ Install:
 pip install --upgrade open-bus-stride-client[cli,urbanaccess]
 ```
 
-See the CLI help messages for available functionality:
+See the notebook for example usage: [siri accessibility analysis using UrbanAccess](https://mybinder.org/v2/gh/hasadna/open-bus-stride-client/HEAD?labpath=notebooks%2Fsiri%20accessibility%20analysis%20using%20UrbanAccess.ipynb)
+
+See the CLI help messages for available functionality via the CLI:
 
 ```
 stride urbanaccess --help
