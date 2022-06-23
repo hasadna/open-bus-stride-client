@@ -42,15 +42,19 @@ def create_data(stats, target_path, service_id, date, start_hour, end_hour, min_
         f_routes.write('route_id,route_short_name,route_type\n')
         f_trips.write('route_id,service_id,trip_id\n')
         f_stop_times.write('trip_id,arrival_time,departure_time,stop_id,stop_sequence\n')
+        recorded_at_time_from = datetime.datetime.combine(date, datetime.time(start_hour), datetime.timezone.utc)
+        recorded_at_time_to = datetime.datetime.combine(date, datetime.time(end_hour, 59, 59), datetime.timezone.utc)
         for item in iterate('/siri_ride_stops/list', {
             'gtfs_stop__lat__greater_or_equal': min_lat,
             'gtfs_stop__lat__lower_or_equal': max_lat,
             'gtfs_stop__lon__greater_or_equal': min_lon,
             'gtfs_stop__lon__lower_or_equal': max_lon,
-            'gtfs_route__date_from': date,
-            'gtfs_route__date_to': date,
-            'siri_vehicle_location__recorded_at_time_from': datetime.datetime.combine(date, datetime.time(start_hour), datetime.timezone.utc),
-            'siri_vehicle_location__recorded_at_time_to': datetime.datetime.combine(date, datetime.time(end_hour, 59, 59), datetime.timezone.utc),
+            'gtfs_date_from': date,
+            'gtfs_date_to': date,
+            'siri_vehicle_location__recorded_at_time_from': recorded_at_time_from,
+            'siri_vehicle_location__recorded_at_time_to': recorded_at_time_to,
+            'siri_ride__scheduled_start_time_from': recorded_at_time_from - datetime.timedelta(hours=10),
+            'siri_ride__scheduled_start_time_to': recorded_at_time_to + datetime.timedelta(hours=10),
             'limit': -1,
         }, limit=None):
             svl_recorded_at_time = item['nearest_siri_vehicle_location__recorded_at_time'].strftime("%H:%M:%S")
@@ -72,8 +76,8 @@ def create_data(stats, target_path, service_id, date, start_hour, end_hour, min_
                 stats['trips'] += 1
             f_stop_times.write(f'{gr_id},{svl_recorded_at_time},{svl_recorded_at_time},{gs_id},{item["order"]}\n')
             stats['stop_times'] += 1
-            if stats["stop_times"] > 1 and stats["stop_times"] % 100000 == 0:
-                print(f'{stats["stop_times"]} stop times...')
+            if stats["stop_times"] > 1 and stats["stop_times"] % 1000 == 0:
+                print(f'saved {stats["stop_times"]} stop times...')
 
 
 def main(date, start_hour, end_hour, bbox, target_path=None):

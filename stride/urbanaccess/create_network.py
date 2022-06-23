@@ -47,4 +47,6 @@ def main(fake_gtfs_path=None, target_path=None, date=None, start_hour=None, end_
     urbanaccess.network.integrate_network(urbanaccess_network=urbanaccess_net, headways=False)
     urbanaccess.network.save_network(urbanaccess_network=urbanaccess_net, dir=target_path, filename='final_net.h5',
                                      overwrite_key=True)
-    print(f'Successfully stored UrbanAccess network at "{os.path.join(target_path, "final_net.h5")}"')
+    network_path = os.path.join(target_path, "final_net.h5")
+    print(f'Successfully stored UrbanAccess network at "{network_path}"')
+    return network_path
