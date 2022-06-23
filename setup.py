@@ -19,6 +19,7 @@ setup(
     name='open-bus-stride-client',
     version=version,
     packages=find_packages(exclude=['contrib', 'docs', 'tests*']),
+    include_package_data=True,
     install_requires=['requests', 'pytz', 'json-stream==1.3.0'],
     extras_require={
         'cli': extras_cli,
