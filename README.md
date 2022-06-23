@@ -47,3 +47,19 @@ See the CLI help message for details:
 stride --help
 ```
 
+### SIRI Accessibility Analysis using UrbanAccess
+
+[UDST/urbanaccess](https://github.com/UDST/urbanaccess/blob/dev/README.rst) is a tool for running accessibility 
+analysis. The stride client provides methods which allow to generate UrbanAccess accesibility graphs for the SIRI data.
+
+Install:
+
+```
+pip install --upgrade open-bus-stride-client[cli,urbanaccess]
+```
+
+See the CLI help messages for available functionality:
+
+```
+stride urbanaccess --help
+```
