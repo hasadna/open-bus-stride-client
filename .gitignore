@@ -6,3 +6,5 @@ dist
 __pycache__
 .data
 VERSION.txt
+logs
+data

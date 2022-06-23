@@ -15,13 +15,15 @@ from .. import config
 from ..common import create_unique_path
 
 
-def main(fake_gtfs_path=None, fake_gtfs_kwargs=None, target_path=None):
-    if fake_gtfs_kwargs:
-        assert not fake_gtfs_path
+def main(fake_gtfs_path=None, target_path=None, date=None, start_hour=None, end_hour=None, bbox=None):
+    if fake_gtfs_path:
+        assert not date and not start_hour and not end_hour and not bbox
+    else:
+        assert date and start_hour and end_hour and bbox
         from .create_fake_gtfs import main
-        fake_gtfs_path = main(**json.loads(fake_gtfs_kwargs))
+        fake_gtfs_path = main(date=date, start_hour=start_hour, end_hour=end_hour, bbox=bbox)
     if not target_path:
-        target_path = create_unique_path(os.path.join(config.OPEN_BUS_SIRI_ETL_ROOTPATH, 'urbanaccess'))
+        target_path = create_unique_path(os.path.join(config.URBANACCESS_DATA_PATH, 'network'))
     assert os.path.exists(os.path.join(fake_gtfs_path, 'siri_feed', 'stop_times.txt'))
     assert os.path.exists(os.path.join(fake_gtfs_path, 'metadata.json'))
     print(dedent(f"""
@@ -45,5 +47,4 @@ def main(fake_gtfs_path=None, fake_gtfs_kwargs=None, target_path=None):
     urbanaccess.network.integrate_network(urbanaccess_network=urbanaccess_net, headways=False)
     urbanaccess.network.save_network(urbanaccess_network=urbanaccess_net, dir=target_path, filename='final_net.h5',
                                      overwrite_key=True)
-    print(target_path)
-    print('OK')
+    print(f'Successfully stored UrbanAccess network at "{os.path.join(target_path, "final_net.h5")}"')

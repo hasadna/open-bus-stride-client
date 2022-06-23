@@ -47,24 +47,25 @@ def create_data(stats, target_path, service_id, date, start_hour, end_hour, min_
             'gtfs_stop__lat__lower_or_equal': max_lat,
             'gtfs_stop__lon__greater_or_equal': min_lon,
             'gtfs_stop__lon__lower_or_equal': max_lon,
-            'gtfs_route__start_time_from': datetime.datetime.combine(date, datetime.time(), datetime.timezone.utc),
-            'gtfs_route__start_time_to': datetime.datetime.combine(date, datetime.time(23, 59, 59), datetime.timezone.utc),
+            'gtfs_route__date_from': date,
+            'gtfs_route__date_to': date,
             'siri_vehicle_location__recorded_at_time_from': datetime.datetime.combine(date, datetime.time(start_hour), datetime.timezone.utc),
             'siri_vehicle_location__recorded_at_time_to': datetime.datetime.combine(date, datetime.time(end_hour, 59, 59), datetime.timezone.utc),
-        }, limit=-1):
-            svl_recorded_at_time = item['siri_vehicle_location__recorded_at_time'].strftime("%H:%M:%S")
+            'limit': -1,
+        }, limit=None):
+            svl_recorded_at_time = item['nearest_siri_vehicle_location__recorded_at_time'].strftime("%H:%M:%S")
             gs_name = gtfs_escape(f'{item["gtfs_stop__city"]}: {item["gtfs_stop__name"]}')
-            gs_id = item['gtfs_stop__id']
+            gs_id = item['gtfs_stop_id']
             if gs_id not in added_stop_ids:
                 added_stop_ids.add(gs_id)
                 f_stops.write(f'{gs_id},{gs_name},{item["gtfs_stop__lat"]},{item["gtfs_stop__lon"]},0\n')
                 stats['stops'] += 1
-            grt_id = item['gtfs_route__id']
+            grt_id = item['gtfs_ride__gtfs_route_id']
             if grt_id not in added_route_ids:
                 added_route_ids.add(grt_id)
                 f_routes.write(f'{grt_id},{gtfs_escape(item["gtfs_route__route_short_name"])},3\n')
                 stats['routes'] += 1
-            gr_id = item['gtfs_ride__id']
+            gr_id = item['siri_ride__gtfs_ride_id']
             if gr_id not in added_trip_ids:
                 added_trip_ids.add(gr_id)
                 f_trips.write(f'{grt_id},{service_id},{gr_id}\n')
@@ -101,5 +102,5 @@ def main(date, start_hour, end_hour, bbox, target_path=None):
             'bbox': [min_lon, min_lat, max_lon, max_lat]
         }, f)
     pprint(dict(stats))
-    print(target_path)
+    print(f'Fake gtfs data successfully stored at "{target_path}"')
     return target_path
