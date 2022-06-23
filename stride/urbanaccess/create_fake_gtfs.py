@@ -78,7 +78,7 @@ def create_data(stats, target_path, service_id, date, start_hour, end_hour, min_
 
 def main(date, start_hour, end_hour, bbox, target_path=None):
     if not target_path:
-        target_path = create_unique_path(os.path.join(config.URBANACCESS_DATA_PATH, 'fake_gtfs_'))
+        target_path = create_unique_path(os.path.join(config.URBANACCESS_DATA_PATH, 'fake_gtfs'))
     target_path_feed = os.path.join(target_path, 'siri_feed')
     os.makedirs(target_path_feed)
     date = parse_date_str(date)
