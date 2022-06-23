@@ -9,6 +9,10 @@ def main():
     pass
 
 
+from .urbanaccess.cli import urbanaccess
+main.add_command(urbanaccess)
+
+
 @main.command()
 @click.argument('PATH')
 @click.argument('PARAMS_JSON', default='{}')
@@ -25,6 +29,7 @@ def get(path, params_json):
 def iterate(path, params_json, limit):
     """Iterate over an API list path with optional json params, print one item per line"""
     from . import streaming
+    i = -1
     for i, item in enumerate(streaming.iterate(path, json.loads(params_json), limit)):
         print(item)
     print(f"Got {i+1} results")

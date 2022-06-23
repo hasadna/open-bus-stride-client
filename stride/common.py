@@ -88,6 +88,10 @@ def get(path, params=None, pre_requests_callback=None):
         )
 
 
+def now():
+    return datetime.datetime.now(datetime.timezone.utc)
+
+
 def create_unique_path(base_path, path_prefix=''):
     os.makedirs(base_path, exist_ok=True)
     for _ in range(5):
@@ -99,6 +103,12 @@ def create_unique_path(base_path, path_prefix=''):
             continue
         return path
     raise Exception("Failed to create unique path")
+
+
+def is_None(val):
+    # due to a problem with airflow dag initialization, in some cases we get
+    # the actual string 'None' which we need to handle as None
+    return val is None or val == 'None'
 
 
 def parse_date_str(date, num_days=None):

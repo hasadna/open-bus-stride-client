@@ -4,3 +4,4 @@ venv
 .idea
 dist
 __pycache__
+.data

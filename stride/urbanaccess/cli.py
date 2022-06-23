@@ -8,12 +8,15 @@ def urbanaccess():
 
 
 @urbanaccess.command()
-@click.option('--target-path')
-@click.option('--date')
-@click.option('--start-hour')
-@click.option('--end-hour')
+@click.option('--target-path', help="Target path to save the fake gtfs data to. "
+                                    "If not provided will create a unique path in local directory.")
+@click.option('--date', help="Date string in format %Y-%m-%d, for example: \"2022-06-15\"", required=True)
+@click.option('--start-hour', type=int, required=True, help="UTC Hour")
+@click.option('--end-hour', type=int, required=True, help="UTC Hour")
 @click.option('--bbox', help='comma-separated square bounding box values: min_lon, min_lat, max_lon, max_lat. '
-                             'Can get it from https://boundingbox.klokantech.com/ - csv export')
+                             'For example: "34.8, 31.96, 34.81, 31.97". '
+                             'Can get it from https://boundingbox.klokantech.com/ - csv export',
+              required=True)
 def create_fake_gtfs(**kwargs):
     """Create fake GTFS data from the siri data to use as input to UrbanAccess"""
     from .create_fake_gtfs import main

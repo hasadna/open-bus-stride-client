@@ -42,16 +42,16 @@ def create_data(stats, target_path, service_id, date, start_hour, end_hour, min_
         f_routes.write('route_id,route_short_name,route_type\n')
         f_trips.write('route_id,service_id,trip_id\n')
         f_stop_times.write('trip_id,arrival_time,departure_time,stop_id,stop_sequence\n')
-        for row in iterate('/siri_ride_stops/list', {
+        for item in iterate('/siri_ride_stops/list', {
             'gtfs_stop__lat__greater_or_equal': min_lat,
             'gtfs_stop__lat__lower_or_equal': max_lat,
             'gtfs_stop__lon__greater_or_equal': min_lon,
             'gtfs_stop__lon__lower_or_equal': max_lon,
-            'gtfs_route__start_time_from': datetime.datetime.combine(date, datetime.time()),
-            'gtfs_route__start_time_to': datetime.datetime.combine(date, datetime.time(23, 59, 59)),
-            'siri_vehicle_location__recorded_at_time_from': datetime.datetime.combine(date, datetime.time(start_hour)),
-            'siri_vehicle_location__recorded_at_time_to': datetime.datetime.combine(date, datetime.time(end_hour, 59, 59)),
-        }):
+            'gtfs_route__start_time_from': datetime.datetime.combine(date, datetime.time(), datetime.timezone.utc),
+            'gtfs_route__start_time_to': datetime.datetime.combine(date, datetime.time(23, 59, 59), datetime.timezone.utc),
+            'siri_vehicle_location__recorded_at_time_from': datetime.datetime.combine(date, datetime.time(start_hour), datetime.timezone.utc),
+            'siri_vehicle_location__recorded_at_time_to': datetime.datetime.combine(date, datetime.time(end_hour, 59, 59), datetime.timezone.utc),
+        }, limit=-1):
             svl_recorded_at_time = item['siri_vehicle_location__recorded_at_time'].strftime("%H:%M:%S")
             gs_name = gtfs_escape(f'{item["gtfs_stop__city"]}: {item["gtfs_stop__name"]}')
             gs_id = item['gtfs_stop__id']
@@ -75,16 +75,14 @@ def create_data(stats, target_path, service_id, date, start_hour, end_hour, min_
                 print(f'{stats["stop_times"]} stop times...')
 
 
-def main(target_path=None, date=None, start_hour=None, end_hour=None, bbox=None):
+def main(date, start_hour, end_hour, bbox, target_path=None):
     if not target_path:
-        target_path = create_unique_path(os.path.join(config.URBANACCESS_DATA_PATH, 'fake_gtfs'))
+        target_path = create_unique_path(os.path.join(config.URBANACCESS_DATA_PATH, 'fake_gtfs_'))
     target_path_feed = os.path.join(target_path, 'siri_feed')
     os.makedirs(target_path_feed)
-    date = parse_date_str(date, 1)
-    start_hour = int(start_hour) if start_hour is not None else 10
-    end_hour = int(end_hour) if end_hour is not None else 12
-    if bbox is None:
-        bbox = '34.8, 31.96, 34.81, 31.97'
+    date = parse_date_str(date)
+    start_hour = int(start_hour)
+    end_hour = int(end_hour)
     min_lon, min_lat, max_lon, max_lat = [float(v.strip()) for v in bbox.split(',')]
     print(dedent(f'''
         creating fake gtfs data
