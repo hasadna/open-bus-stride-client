@@ -9,6 +9,7 @@ import urbanaccess.osm.load
 import urbanaccess.osm.network
 import urbanaccess.network
 import urbanaccess.plot
+import urbanaccess.gtfs.headways
 
 
 from .. import config
@@ -42,11 +43,22 @@ def main(fake_gtfs_path=None, target_path=None, date=None, start_hour=None, end_
         day='tuesday',  # day doesn't matter because the fake gtfs data has service enabled for all days
         timerange=[f'{start_hour:02}:00:00', f'{end_hour:02}:00:00']
     )
+    loaded_feeds.routes['route_long_name'] = loaded_feeds.routes['route_short_name']
+    urbanaccess.gtfs.headways.headways(
+        loaded_feeds,
+        [f'{start_hour:02}:00:00', f'{end_hour:02}:00:00']
+    )
     nodes, edges = urbanaccess.osm.load.ua_network_from_bbox(bbox=bbox, remove_lcn=True)
     urbanaccess.osm.network.create_osm_net(osm_edges=edges, osm_nodes=nodes, travel_speed_mph=3)
-    urbanaccess.network.integrate_network(urbanaccess_network=urbanaccess_net, headways=False)
-    urbanaccess.network.save_network(urbanaccess_network=urbanaccess_net, dir=target_path, filename='final_net.h5',
-                                     overwrite_key=True)
+    urbanaccess.network.integrate_network(
+        urbanaccess_network=urbanaccess_net, headways=True,
+        urbanaccess_gtfsfeeds_df=loaded_feeds,
+    )
+    urbanaccess.network.save_network(
+        urbanaccess_network=urbanaccess_net,
+        dir=target_path, filename='final_net.h5',
+        overwrite_key=True
+    )
     network_path = os.path.join(target_path, "final_net.h5")
     print(f'Successfully stored UrbanAccess network at "{network_path}"')
     return network_path
