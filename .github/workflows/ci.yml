@@ -17,6 +17,9 @@ jobs:
         uci git checkout --github-repo-name hasadna/open-bus-stride-api --branch-name main \
           --config-user-name "open-bus-stride-client-ci" \
           --fetch-depth 1 --path ../open-bus-stride-api &&\
+        uci git checkout --github-repo-name hasadna/open-bus-stride-db --branch-name main \
+          --config-user-name "open-bus-stride-client-ci" \
+          --fetch-depth 1 --path ../open-bus-stride-db &&\
         pip install -e .[all] &&\
         pip install -r ../open-bus-stride-api/requirements-dev.txt &&\
         pip install -e ../open-bus-stride-api &&\
