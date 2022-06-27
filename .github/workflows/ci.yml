@@ -14,7 +14,12 @@ jobs:
         curl -s https://raw.githubusercontent.com/OriHoch/uumpa-ci-toolbox/65a0704332e63d51f63981dbb25cd83682dc4078/bin/github_actions_install.sh \
           | bash -s 4d163c416a5c7192e4f4dba883bb4c0480eaee8c OriHoch/uumpa-ci-toolbox &&\
         uci github actions self-checkout --config-user-name "open-bus-stride-client-ci" &&\
+        uci git checkout --github-repo-name hasadna/open-bus-stride-api --branch-name main \
+          --config-user-name "open-bus-stride-client-ci" \
+          --fetch-depth 1 --path ../open-bus-stride-api &&\
         pip install -e .[all] &&\
+        pip install -r ../open-bus-stride-api/requirements-dev.txt &&\
+        pip install -e ../open-bus-stride-api &&\
         pip install -r tests/requirements.txt &&\
         pytest &&\
         TAG_NAME="$(uci github actions get-tag-name)" &&\
