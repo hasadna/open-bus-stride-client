@@ -12,8 +12,6 @@ from . import config, common, exceptions
 def iterate(path, params=None, limit=10000, pre_requests_callback=None):
     if not params:
         params = {}
-    if limit and (not params.get('limit') or params.get('limit') == -1):
-        params['limit'] = limit
     url = config.STRIDE_API_BASE_URL + path
     params = common.parse_params(params)
     if pre_requests_callback:

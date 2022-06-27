@@ -9,6 +9,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         TWINE_USERNAME: ${{ secrets.TWINE_USERNAME }}
         TWINE_PASSWORD: ${{ secrets.TWINE_PASSWORD }}
+        ALLOW_SLOW_TESTS: "yes"
       run: |
         curl -s https://raw.githubusercontent.com/OriHoch/uumpa-ci-toolbox/65a0704332e63d51f63981dbb25cd83682dc4078/bin/github_actions_install.sh \
           | bash -s 4d163c416a5c7192e4f4dba883bb4c0480eaee8c OriHoch/uumpa-ci-toolbox &&\

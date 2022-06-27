@@ -66,3 +66,41 @@ See the CLI help messages for available functionality via the CLI:
 ```
 stride urbanaccess --help
 ```
+
+### Using API Proxy for local API access
+
+This method allows running locally without depending on the Stride API HTTP endpoint.
+It requires configuration of Stride API which requires a connection to the Stride DB.
+See open-bus-stride-api docs for details.
+
+Following steps assume you have a clone of open-bus-stride-api repo at `../open-bus-stride-api`, as
+well as all requirements of open-bus-stride-api, see that repo's README for details.
+
+Install api proxy dependencies
+
+```
+pip install -e .[apiproxy]
+```
+
+Install open-bus-stride-api dependencies
+
+```
+pip install -r ../open-bus-stride-api/requirements-dev.txt
+pip install -e ../open-bus-stride-api
+```
+
+Set env vars (assuming you have them setup in open-bus-stride-api):
+
+```
+. ../open-bus-stride-api/.env
+```
+
+Following snippet runs a stride function using the api proxy:
+
+```
+python3 -c "
+import stride, stride.api_proxy
+with stride.api_proxy.start():
+    print(stride.get('/gtfs_stops/list', params={}))
+"
+```

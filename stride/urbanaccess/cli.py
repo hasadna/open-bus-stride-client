@@ -17,6 +17,7 @@ def urbanaccess():
                              'For example: "34.8, 31.96, 34.81, 31.97". '
                              'Can get it from https://boundingbox.klokantech.com/ - csv export',
               required=True)
+@click.option('--use-proxy-server', is_flag=True)
 def create_fake_gtfs(**kwargs):
     """Create fake GTFS data from the siri data to use as input to UrbanAccess"""
     from .create_fake_gtfs import main

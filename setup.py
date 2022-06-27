@@ -2,6 +2,7 @@ from setuptools import setup, find_packages
 from os import path
 import time
 
+
 if path.exists("VERSION.txt"):
     # this file can be written by CI tools (e.g. Travis)
     with open("VERSION.txt") as version_file:
@@ -14,6 +15,7 @@ extras_cli = ['click==8.1.3']
 extras_jupyter = ['jupyterlab', 'ipywidgets']
 extras_notebooks = ['pandas>=1.3<1.4']
 extras_urbanaccess = ['urbanaccess==0.2.2', 'geopandas==0.10.2']
+extras_apiproxy = ['psutil']
 
 
 setup(
@@ -26,11 +28,13 @@ setup(
         'cli': extras_cli,
         'notebooks': extras_notebooks,
         'urbanaccess': extras_urbanaccess,
+        'apiproxy': extras_apiproxy,
         'all': [
             *extras_cli,
             *extras_jupyter,
             *extras_notebooks,
             *extras_urbanaccess,
+            *extras_apiproxy,
         ]
     },
     entry_points={
