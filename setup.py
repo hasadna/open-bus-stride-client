@@ -11,7 +11,7 @@ else:
     version = str(time.time())
 
 
-extras_cli = ['click==8.1.3']
+extras_cli = ['click>=7.0']
 extras_jupyter = ['jupyterlab', 'ipywidgets']
 extras_notebooks = ['pandas>=1.3<1.4']
 extras_urbanaccess = ['urbanaccess==0.2.2', 'geopandas==0.10.2']
