@@ -37,6 +37,8 @@ jobs:
           chmod 400 stride_etl_deploy_key &&\
           export GIT_SSH_COMMAND="ssh -i `pwd`/stride_etl_deploy_key -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" &&\
           git clone git@github.com:hasadna/open-bus-stride-etl.git &&\
+          git config --global user.name "Open Bus Stride Client CI" &&\
+          git config --global user.email "open-bus-stride-client-ci@localhost" &&\
           cd open-bus-stride-etl &&\
           echo "${TAG_NAME}" > stride-client-latest-tag.txt &&\
           git add stride-client-latest-tag.txt &&\
