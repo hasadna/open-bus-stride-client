@@ -11,6 +11,7 @@ jobs:
         TWINE_PASSWORD: ${{ secrets.TWINE_PASSWORD }}
         SQLALCHEMY_URL: ${{ secrets.SQLALCHEMY_URL }}
         ALLOW_SLOW_TESTS: "yes"
+        STRIDE_ETL_DEPLOY_KEY: ${{ secrets.STRIDE_ETL_DEPLOY_KEY }}
       run: |
         curl -s https://raw.githubusercontent.com/OriHoch/uumpa-ci-toolbox/65a0704332e63d51f63981dbb25cd83682dc4078/bin/github_actions_install.sh \
           | bash -s 4d163c416a5c7192e4f4dba883bb4c0480eaee8c OriHoch/uumpa-ci-toolbox &&\
@@ -31,5 +32,14 @@ jobs:
           echo "${TAG_NAME}" > VERSION.txt &&\
           pip install --upgrade build pip twine &&\
           python3 -m build &&\
-          python3 -m twine upload "dist/open-bus-stride-client-${TAG_NAME}.tar.gz"
+          python3 -m twine upload "dist/open-bus-stride-client-${TAG_NAME}.tar.gz" &&\
+          echo "${STRIDE_ETL_DEPLOY_KEY}" > stride_etl_deploy_key &&\
+          chmod 400 stride_etl_deploy_key &&\
+          export GIT_SSH_COMMAND="ssh -i `pwd`/stride_etl_deploy_key -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" &&\
+          git clone git@github.com:hasadna/open-bus-stride-etl.git &&\
+          cd open-bus-stride-etl &&\
+          echo "${TAG_NAME}" > stride-client-latest-tag.txt &&\
+          git add stride-client-latest-tag.txt &&\
+          git commit -m "automatic update of open bus stride client dependencies" &&\
+          git push origin main
         fi
