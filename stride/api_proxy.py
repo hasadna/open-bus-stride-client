@@ -1,3 +1,4 @@
+import sys
 import time
 import subprocess
 from contextlib import contextmanager
@@ -20,7 +21,7 @@ def start(enable=True):
     """
     if enable:
         STRIDE_API_BASE_URL = config.STRIDE_API_BASE_URL
-        process = subprocess.Popen(['uvicorn', 'open_bus_stride_api.main:app', '--port', '0'])
+        process = subprocess.Popen([sys.executable, '-m', 'uvicorn', 'open_bus_stride_api.main:app', '--port', '0'])
         port = None
         try:
             for i in range(1, START_WAIT_TIME_ITERATIONS + 1):
