@@ -39,7 +39,7 @@ Refer to the [API Docs](https://open-bus-stride-api.hasadna.org.il/docs) for the
 Most methods are available via CLI, to install CLI support:
 
 ```
-pip install --upgrade open-bus-stride-client[cli]
+pip install --upgrade "open-bus-stride-client[cli]"
 ```
 
 See the CLI help message for details:
