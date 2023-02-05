@@ -10,7 +10,7 @@ jobs:
         TWINE_USERNAME: ${{ secrets.TWINE_USERNAME }}
         TWINE_PASSWORD: ${{ secrets.TWINE_PASSWORD }}
         SQLALCHEMY_URL: ${{ secrets.SQLALCHEMY_URL }}
-        ALLOW_SLOW_TESTS: "yes"
+        ALLOW_SLOW_TESTS: "no"
         STRIDE_ETL_DEPLOY_KEY: ${{ secrets.STRIDE_ETL_DEPLOY_KEY }}
       run: |
         curl -s https://raw.githubusercontent.com/OriHoch/uumpa-ci-toolbox/65a0704332e63d51f63981dbb25cd83682dc4078/bin/github_actions_install.sh \
