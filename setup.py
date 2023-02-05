@@ -13,7 +13,7 @@ else:
 
 extras_cli = ['click>=7.0']
 extras_jupyter = ['jupyterlab', 'ipywidgets']
-extras_notebooks = ['pandas>=1.3<1.4']
+extras_notebooks = ['pandas>=1.3,<1.4']
 extras_urbanaccess = ['urbanaccess==0.2.2', 'geopandas==0.10.2']
 extras_apiproxy = ['psutil']
 
