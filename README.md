@@ -39,7 +39,7 @@ Refer to the [API Docs](https://open-bus-stride-api.hasadna.org.il/docs) for the
 Most methods are available via CLI, to install CLI support:
 
 ```
-pip install --upgrade open-bus-stride-client[cli]
+pip install --upgrade "open-bus-stride-client[cli]"
 ```
 
 See the CLI help message for details:
@@ -56,7 +56,7 @@ analysis. The stride client provides methods which allow to generate UrbanAccess
 Install:
 
 ```
-pip install --upgrade open-bus-stride-client[cli,urbanaccess]
+pip install --upgrade "open-bus-stride-client[cli,urbanaccess]"
 ```
 
 See the notebook for example usage: [siri accessibility analysis using UrbanAccess](https://mybinder.org/v2/gh/hasadna/open-bus-stride-client/HEAD?labpath=notebooks%2Fsiri%20accessibility%20analysis%20using%20UrbanAccess.ipynb)
@@ -79,7 +79,7 @@ well as all requirements of open-bus-stride-api, see that repo's README for deta
 Install api proxy dependencies
 
 ```
-pip install -e .[apiproxy]
+pip install -e ".[apiproxy]"
 ```
 
 Install open-bus-stride-api dependencies
